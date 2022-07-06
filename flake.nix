@@ -4,9 +4,10 @@
         templates = {
             haskell-app = {
                 path = ./haskell-app;
-                description = "Haskell app with library.";
+                description = "Haskell app with library and test suite.";
             };
         };
+
         defaultTemplate = self.templates.haskell-app;
     };
 }

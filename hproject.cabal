@@ -21,19 +21,11 @@ flag WStrict
 
 common ghc-common-options
   ghc-options:
-    -- Warnings:
     -Wall -Wcompat -Widentities -Wincomplete-record-updates
     -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints
-    -Wno-unused-do-bind
-    -- Optimizations:
-    -fhide-source-paths -fshow-hole-constraints
+    -Wno-unused-do-bind -fshow-hole-constraints
     -flate-specialise -fexpose-all-unfoldings -flate-dmd-anal
-    -fstatic-argument-transformation 
-    -- Linker flags: 
-    "-pgmP clang" "-pgmc clang"
-    "-pgma clang" "-pgml clang" -optl-fuse-ld=lld
-
-  ld-options: -fuse-ld=lld
+    -fstatic-argument-transformation
 
   if flag(dump)
     ghc-options: -ddump-simpl
@@ -42,10 +34,17 @@ common ghc-common-options
     ghc-options: -Werror -Wunused-packages
 
   default-extensions:
-    DeriveGeneric
     OverloadedStrings
 
-  build-depends:      base >=4.14 && <=5.0
+  build-depends:
+    , base    >=4.14  && <=5.0
+    , relude  ^>=1.1.0
+
+  mixins:
+    base hiding (Prelude),
+    relude (Relude as Prelude),
+    relude
+
   default-language:   Haskell2010
 
 library

@@ -12,12 +12,12 @@
     flake-utils.lib.eachSystem [ "x86_64-linux" ] (system:
       let
         name = "hproject";
-        index-state = "2022-06-27T00:00:00Z";
+        index-state = "2022-09-06T00:00:00Z";
         overlays = [ haskellNix.overlay (final: prev: {
           flakeProject = final.haskell-nix.project' {
             inherit index-state;
             src = ./.;
-            compiler-nix-name = "ghc8107";
+            compiler-nix-name = "ghc924";
             shell.tools = {
               cabal = { inherit index-state; };
               hlint = { inherit index-state; };

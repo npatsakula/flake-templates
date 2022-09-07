@@ -1,1 +1,1 @@
-module Library where
+module Library () where

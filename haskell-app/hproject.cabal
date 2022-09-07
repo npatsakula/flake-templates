@@ -20,12 +20,38 @@ flag WStrict
   default:     False
 
 common ghc-common-options
-  ghc-options:
-    -Wall -Wcompat -Widentities -Wincomplete-record-updates
-    -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints
-    -Wno-unused-do-bind -fshow-hole-constraints
-    -flate-specialise -fexpose-all-unfoldings -flate-dmd-anal
-    -fstatic-argument-transformation
+  ghc-options: -Wall
+               -Wcompat
+               -Widentities
+               -Wincomplete-uni-patterns
+               -Wincomplete-record-updates
+               -Wredundant-constraints
+               -Wnoncanonical-monad-instances
+               -Wmissing-export-lists
+               -Wpartial-fields
+               -Wmissing-deriving-strategies
+              --  -Wunused-packages
+               -fhide-source-paths
+               -fshow-hole-constraints
+               -flate-specialise
+               -fexpose-all-unfoldings
+               -flate-dmd-anal
+               -fstatic-argument-transformation
+               -fwrite-ide-info
+               -hiedir=.hie
+
+  if impl(ghc >= 9.0)
+    ghc-options: -Winvalid-haddock
+                 -Wunicode-bidirectional-format-characters
+                 -Werror=unicode-bidirectional-format-characters
+
+  if impl(ghc >= 9.2)
+    ghc-options:  -Wredundant-bang-patterns
+                  -Woperator-whitespace
+                  -Wimplicit-lift
+
+  if impl(ghc >= 9.4)
+    ghc-options:  -Wredundant-strictness-flags
 
   if flag(dump)
     ghc-options: -ddump-simpl
@@ -58,8 +84,12 @@ executable hproject
   build-depends:  hproject
   hs-source-dirs: app
   ghc-options:
-    -O2 -threaded -rtsopts -with-rtsopts=--nonmoving-gc
-    -with-rtsopts=-A64m -with-rtsopts=-AL128m
+    -O2 -threaded
+    -rtsopts
+    -with-rtsopts=-N
+    -with-rtsopts=--nonmoving-gc
+    -with-rtsopts=-A64m
+    -with-rtsopts=-AL128m
 
 test-suite hproject-test
   import:         ghc-common-options

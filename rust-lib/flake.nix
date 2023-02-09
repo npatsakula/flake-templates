@@ -5,9 +5,10 @@
     rust-overlay.url = "github:oxalica/rust-overlay";
     flake-compat = { url = "github:edolstra/flake-compat"; flake = false; };
     crane = { url = "github:ipetkov/crane"; inputs.nixpkgs.follows = "nixpkgs"; };
+    advisory-db = { url = "github:rustsec/advisory-db"; flake = false; };
   };
 
-  outputs = { self, nixpkgs, utils, crane, rust-overlay, flake-compat }:
+  outputs = { self, nixpkgs, utils, crane, rust-overlay, advisory-db, flake-compat }:
     utils.lib.eachDefaultSystem (system:
       let
         pkgs = (import nixpkgs {
@@ -47,6 +48,10 @@
           test = crane'.cargoNextest (commonArgs // {
             inherit cargoArtifacts;
           });
+
+          audit = crane'.cargoAudit {
+            inherit src advisory-db;
+          };
 
           format = crane'.cargoFmt { inherit src; };
         };

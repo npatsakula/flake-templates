@@ -9,7 +9,7 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, haskellNix, flake-compat }:
-    flake-utils.lib.eachSystem [ "aarch64-darwin" "x86_64-linux" ] (system:
+    flake-utils.lib.eachSystem [ "x86_64-linux" ] (system:
       let
         name = "hproject";
         index-state = "2023-02-08T00:00:00Z";

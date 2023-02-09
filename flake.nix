@@ -4,7 +4,7 @@
         templates = {
             haskell-nix = {
                 path = ./haskell-nix;
-                description = "haskell.nix app with library environment and test suite.";
+                description = "haskell.nix app with library environment and test suite. X86 only.";
             };
 
             haskell-simple = {

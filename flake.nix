@@ -2,12 +2,17 @@
     description = "A collection of flake templates.";
     outputs = { self }: {
         templates = {
-            haskell-app = {
-                path = ./haskell-app;
-                description = "Haskell app with library and test suite.";
+            haskell-nix = {
+                path = ./haskell-nix;
+                description = "haskell.nix app with library environment and test suite.";
+            };
+
+            haskell-simple = {
+              path = ./haskell-simple;
+              description = "Haskell app with library environment and test suite.";
             };
         };
 
-        defaultTemplate = self.templates.haskell-app;
+        defaultTemplate = self.templates.haskell-nix;
     };
 }

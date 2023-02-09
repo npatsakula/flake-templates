@@ -9,15 +9,15 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, haskellNix, flake-compat }:
-    flake-utils.lib.eachSystem [ "x86_64-linux" ] (system:
+    flake-utils.lib.eachSystem [ "aarch64-darwin" "x86_64-linux" ] (system:
       let
         name = "hproject";
-        index-state = "2022-09-06T00:00:00Z";
+        index-state = "2023-02-08T00:00:00Z";
         overlays = [ haskellNix.overlay (final: prev: {
           flakeProject = final.haskell-nix.project' {
             inherit index-state;
             src = ./.;
-            compiler-nix-name = "ghc924";
+            compiler-nix-name = "ghc944";
             shell.tools = {
               cabal = { inherit index-state; };
               hlint = { inherit index-state; };
@@ -53,4 +53,13 @@
           created = "now";
         };
       });
+
+  nixConfig = {
+    # This sets the flake to use the IOG nix cache.
+    # Nix should ask for permission before using it,
+    # but remove it here if you do not want it to.
+    extra-substituters = ["https://cache.iog.io"];
+    extra-trusted-public-keys = ["hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="];
+    allow-import-from-derivation = "true";
+  };
 }

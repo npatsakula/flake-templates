@@ -1,0 +1,12 @@
+[package]
+name = "rust-bin"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tcmalloc = "0.3"
+
+[profile.production]
+inherits = "release"
+strip = "debuginfo"
+lto = "fat"

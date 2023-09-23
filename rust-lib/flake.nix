@@ -20,7 +20,7 @@
           rust_nightly = self.rust-bin.nightly.latest.default;
         });
 
-        stdenv = pkgs.llvmPackages_15.stdenv;
+        stdenv = pkgs.llvmPackages_16.stdenv;
         mkShell = pkgs.mkShell.override { inherit stdenv; };
         crane' = (crane.mkLib pkgs).overrideToolchain (pkgs.rust_stable);
 
@@ -30,14 +30,11 @@
           || (testDataFilter path type)
           || (crane'.filterCargoSources path type);
 
-        name = "rust-lib";
         src = pkgs.lib.cleanSourceWith { src = ./.; filter = sourceFilter; };
         nativeBuildInputs = [];
         commonArgs = { inherit src nativeBuildInputs; };
 
-        cargoArtifacts = crane'.buildDepsOnly (commonArgs // {
-          pname = name;
-        });
+        cargoArtifacts = crane'.buildDepsOnly (commonArgs // {});
       in {
         checks = {
           clippy = crane'.cargoClippy (commonArgs // {

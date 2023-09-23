@@ -30,19 +30,17 @@
           || (testDataFilter path type)
           || (crane'.filterCargoSources path type);
 
-        name = "rust-bin";
         src = pkgs.lib.cleanSourceWith { src = ./.; filter = sourceFilter; };
         nativeBuildInputs = with pkgs; [ gperftools ];
         commonArgs = { inherit src nativeBuildInputs; };
 
-        cargoArtifacts = crane'.buildDepsOnly (commonArgs // {
-          pname = name;
-        });
+        cargoArtifacts = crane'.buildDepsOnly (commonArgs // {});
+        name = "${cargoArtifacts.pname}";
       in rec {
         packages = {
           default = packages."${name}";
 
-          "${name}" = crane'.buildPackage (commonArgs // {
+          "${cargoArtifacts.pname}" = crane'.buildPackage (commonArgs // {
             inherit cargoArtifacts;
           });
 

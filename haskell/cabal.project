@@ -1,0 +1,9 @@
+packages: hproject.cabal
+jobs: $ncpus
+
+package *
+  optimization: 2
+  documentation: True
+
+program-options
+  ghc-options: -haddock

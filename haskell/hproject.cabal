@@ -30,7 +30,6 @@ common ghc-common-options
                -Wmissing-export-lists
                -Wpartial-fields
                -Wmissing-deriving-strategies
-              --  -Wunused-packages
                -fhide-source-paths
                -fshow-hole-constraints
                -flate-specialise
@@ -63,26 +62,25 @@ common ghc-common-options
     OverloadedStrings
 
   build-depends:
-    , base    >=4.14  && <=5.0
-    , relude  ^>=1.1.0
+    , base    >=4  && <=5
 
-  mixins:
-    base hiding (Prelude),
-    relude (Relude as Prelude),
-    relude
-
-  default-language:   Haskell2010
+  default-language: GHC2021
 
 library
   import:          ghc-common-options
   exposed-modules: Library
   hs-source-dirs:  src
+  build-depends:
+     lens, text, vector, containers, bytestring, aeson
 
 executable hproject
   import:         ghc-common-options
   main-is:        Main.hs
-  build-depends:  hproject
-  hs-source-dirs: app
+  build-depends:
+     , hproject
+     , pretty-simple
+
+  hs-source-dirs: exe
   ghc-options:
     -O2 -threaded
     -rtsopts

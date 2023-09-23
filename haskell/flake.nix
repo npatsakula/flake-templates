@@ -8,12 +8,12 @@
   let
     name = "hproject";
     pkgs = import nixpkgs { inherit system; };
-    haskellPackages = pkgs.haskell.packages.ghc944;
+    haskellPackages = pkgs.haskell.packages.ghc962;
   in
     {
       packages = rec {
-        default = liho;
-        liho = haskellPackages.callCabal2nix name ./. {};
+        default = hproject;
+        hproject = haskellPackages.callCabal2nix name ./. {};
 
         container = let
           version = self.packages.${system}.${name}.version;
@@ -26,8 +26,8 @@
         };
       };
 
-      devShell = haskellPackages.shellFor {
-        packages = p: [ self.packages.${system}.liho ];
+      devShells.default = haskellPackages.shellFor {
+        packages = p: [ self.packages.${system}.hproject ];
         withHoogle = true;
         buildInputs = with haskellPackages; [
           haskell-language-server

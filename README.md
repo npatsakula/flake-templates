@@ -48,7 +48,7 @@ cd rusty && sd 'rust-bin' 'rusty' Cargo.toml
 
 ### Build docker image
 
-NB! Currently only for `rust-bin`.
+**NB!** Currently only for `rust-bin`.
 
 ```bash
 # Build image:
@@ -66,9 +66,9 @@ You can add some native dependencies by extending `contents` section:
 contents = [ packages."${name}" pkgs.coreutils-full ];
 ```
 
-### Specify native dependency
+### Specify native dependencies
 
-NB! You can search dependencies with [nixpkg](https://search.nixos.org/packages).
+**NB!** You can search dependencies with [nixpkg](https://search.nixos.org/packages).
 
 Add dependencies in `nativeBuildInputs` list:
 

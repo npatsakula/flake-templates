@@ -46,6 +46,12 @@ nix flake new --template github:npatsakula/flake-templates#rust-bin ./rusty
 cd rusty && sd 'rust-bin' 'rusty' Cargo.toml
 ```
 
+### Run checks
+
+```bash
+nix flake check -j$(nproc)
+```
+
 ### Build docker image
 
 **NB!** Currently only for `rust-bin`.

@@ -60,6 +60,9 @@ common ghc-common-options
 
   default-extensions:
     OverloadedStrings
+    DerivingStrategies
+    LambdaCase
+--  TemplateHaskell
 
   build-depends:
     , base    >=4  && <=5

@@ -46,6 +46,15 @@ nix flake new --template github:npatsakula/flake-templates#rust-bin ./rusty
 cd rusty && sd 'rust-bin' 'rusty' Cargo.toml
 ```
 
+Build docker image (only for `rust-bin`):
+
+```bash
+# Build image:
+nix build -j$(nproc) '.#container'
+# Import image:
+docker build < result
+```
+
 You can specify some native dependencies from [nixpkg](https://search.nixos.org/packages) in `nativeBuildInputs`
 list:
 

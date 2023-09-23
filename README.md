@@ -30,14 +30,14 @@ echo "experimental-features = flakes nix-command" >> ~/.config/nix/nix.conf
 
 ## Usage
 
-Add to existing project:
+### Add to existing project
 
 ```bash
 # `rust-bin` template:
 nix flake init --template github:npatsakula/flake-templates#rust-bin
 ```
 
-Create new project:
+### Create new project
 
 ```bash
 # `rust-bin` template:
@@ -46,7 +46,9 @@ nix flake new --template github:npatsakula/flake-templates#rust-bin ./rusty
 cd rusty && sd 'rust-bin' 'rusty' Cargo.toml
 ```
 
-Build docker image (only for `rust-bin`):
+### Build docker image
+
+NB! Currently only for `rust-bin`.
 
 ```bash
 # Build image:
@@ -55,14 +57,28 @@ nix build -j$(nproc) '.#container'
 docker build < result
 ```
 
-You can specify some native dependencies from [nixpkg](https://search.nixos.org/packages) in `nativeBuildInputs`
-list:
+Image will contain only (!) executable app and some minimal runtime (coreutils is
+not included).
+
+You can add some native dependencies by extending `contents` section:
+
+```nix
+contents = [ packages."${name}" pkgs.coreutils-full ];
+```
+
+### Specify native dependency
+
+NB! You can search dependencies with [nixpkg](https://search.nixos.org/packages).
+
+Add dependencies in `nativeBuildInputs` list:
 
 ```nix
 nativeBuildInputs = with pkgs; [ zstd.dev mimalloc.dev pkg-config ];
 ```
 
-You can use unstable nixpkgs (replace `nixpkgs` in `input` section):
+### Use unstable nixpkgs
+
+Replace `nixpkgs` in `input` section:
 
 ```nix
 nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";

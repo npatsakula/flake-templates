@@ -45,3 +45,16 @@ nix flake new --template github:npatsakula/flake-templates#rust-bin ./rusty
 # Until we don't have template name replacer:
 cd rusty && sd 'rust-bin' 'rusty' Cargo.toml
 ```
+
+You can specify some native dependencies from [nixpkg](https://search.nixos.org/packages) in `nativeBuildInputs`
+list:
+
+```nix
+nativeBuildInputs = with pkgs; [ zstd.dev mimalloc.dev pkg-config ];
+```
+
+You can use unstable nixpkgs (replace `nixpkgs` in `input` section):
+
+```nix
+nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+```

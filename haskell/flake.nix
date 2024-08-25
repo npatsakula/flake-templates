@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
     flake-compat = { url = "github:edolstra/flake-compat"; flake = false; };
   };
@@ -8,7 +8,7 @@
   let
     name = "hproject";
     pkgs = import nixpkgs { inherit system; };
-    haskellPackages = pkgs.haskell.packages.ghc962;
+    haskellPackages = pkgs.haskell.packages.ghc9101;
   in
     {
       packages = rec {
@@ -30,9 +30,9 @@
         packages = p: [ self.packages.${system}.hproject ];
         withHoogle = true;
         buildInputs = with haskellPackages; [
-          haskell-language-server
-          ghcid
-          cabal-install
+          # haskell-language-server
+          # ghcid
+          # cabal-install
         ];
       };
   });

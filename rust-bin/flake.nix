@@ -20,7 +20,7 @@
           rust_nightly = self.rust-bin.nightly.latest.default;
         });
 
-        stdenv = pkgs.llvmPackages_16.stdenv;
+        stdenv = pkgs.llvmPackages_18.stdenv;
         mkShell = pkgs.mkShell.override { inherit stdenv; };
         crane' = (crane.mkLib pkgs).overrideToolchain (pkgs.rust_stable);
 
@@ -35,21 +35,22 @@
         commonArgs = { inherit src nativeBuildInputs; };
 
         cargoArtifacts = crane'.buildDepsOnly (commonArgs // {});
-        name = "${cargoArtifacts.pname}";
+        crate = crane'.crateNameFromCargoToml { cargoToml = ./Cargo.toml; };
       in rec {
         packages = {
-          default = packages."${name}";
+          default = packages."${crate.pname}";
 
-          "${cargoArtifacts.pname}" = crane'.buildPackage (commonArgs // {
+          "${crate.pname}" = crane'.buildPackage (commonArgs // {
             inherit cargoArtifacts;
           });
 
           container = let
             rev = self.sourceInfo.shortRev or "dirty";
-            tag = "${packages."${name}".version}-${rev}";
+            tag = "${packages."${crate.pname}".version}-${rev}";
           in pkgs.dockerTools.buildLayeredImage {
-            inherit tag name;
-            contents = [ packages."${name}" ];
+            inherit tag;
+            name = "${crate.pname}";
+            contents = [ packages."${crate.pname}" ];
             created = "now";
           };
         };

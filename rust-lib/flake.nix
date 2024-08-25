@@ -20,7 +20,7 @@
           rust_nightly = self.rust-bin.nightly.latest.default;
         });
 
-        stdenv = pkgs.llvmPackages_16.stdenv;
+        stdenv = pkgs.llvmPackages_18.stdenv;
         mkShell = pkgs.mkShell.override { inherit stdenv; };
         crane' = (crane.mkLib pkgs).overrideToolchain (pkgs.rust_stable);
 

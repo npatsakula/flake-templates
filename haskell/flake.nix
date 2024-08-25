@@ -8,7 +8,7 @@
   let
     name = "hproject";
     pkgs = import nixpkgs { inherit system; };
-    haskellPackages = pkgs.haskell.packages.ghc9101;
+    haskellPackages = pkgs.haskell.packages.ghc982;
   in
     {
       packages = rec {
@@ -30,9 +30,9 @@
         packages = p: [ self.packages.${system}.hproject ];
         withHoogle = true;
         buildInputs = with haskellPackages; [
-          # haskell-language-server
-          # ghcid
-          # cabal-install
+          haskell-language-server
+          ghcid
+          cabal-install
         ];
       };
   });
